@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require 'vendor/autoload.php';
+require '/var/www/vendor/autoload.php';
 
 // get mongodb object database
 function get_mongodb($is_development = false) {
