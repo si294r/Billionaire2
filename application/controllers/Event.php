@@ -61,7 +61,9 @@ class Event extends CI_Controller {
             'end_date' => $this->input->post('end_date'),
             'device' => $this->input->post('device'),
             'version' => $this->input->post('version'),
-            'status' => $this->input->post('status')
+            'status' => $this->input->post('status'),
+            'update_time' => gmdate("Y-m-d H:i:s"),
+            'server_time' => $this->input->post('server_time')
         );
         $insert = $this->event->save($data);
         echo json_encode(array("status" => TRUE));
@@ -74,7 +76,9 @@ class Event extends CI_Controller {
             'end_date' => $this->input->post('end_date'),
             'device' => $this->input->post('device'),
             'version' => $this->input->post('version'),
-            'status' => $this->input->post('status')
+            'status' => $this->input->post('status'),
+            'update_time' => gmdate("Y-m-d H:i:s"),
+            'server_time' => $this->input->post('server_time')
         );
         $this->event->update_by_id($this->input->post('_id'), $data);
         echo json_encode(array("status" => TRUE));
@@ -85,27 +89,27 @@ class Event extends CI_Controller {
         echo json_encode(array("status" => TRUE));
     }
 
-    public function get($device, $version, $debug = 0) {
-        $start_time = microtime(true);
-        if ($debug == 1) {
-            $this->event->table = str_replace("_prod", "_dev", $this->db->database) . "." . $this->event->table;
-        }
-        $json['current_time'] = date('Y-m-d H:i:s');
-        $json['device'] = $device;
-        $json['version'] = $version;
-
-        $data = $this->event->get_event($device, $version);
-        if (is_object($data)) {
-            $json['event_time']['start'] = $data->start_date;
-            $json['event_time']['end'] = $data->end_date;
-        }
-
-        $end_time = microtime(true);
-
-        $json['execute_time'] = $end_time - $start_time;
-        $json['memory_usage'] = memory_get_usage(true);
-
-        echo json_encode($json);
-    }
+//    public function get($device, $version, $debug = 0) {
+//        $start_time = microtime(true);
+//        if ($debug == 1) {
+//            $this->event->table = str_replace("_prod", "_dev", $this->db->database) . "." . $this->event->table;
+//        }
+//        $json['current_time'] = date('Y-m-d H:i:s');
+//        $json['device'] = $device;
+//        $json['version'] = $version;
+//
+//        $data = $this->event->get_event($device, $version);
+//        if (is_object($data)) {
+//            $json['event_time']['start'] = $data->start_date;
+//            $json['event_time']['end'] = $data->end_date;
+//        }
+//
+//        $end_time = microtime(true);
+//
+//        $json['execute_time'] = $end_time - $start_time;
+//        $json['memory_usage'] = memory_get_usage(true);
+//
+//        echo json_encode($json);
+//    }
 
 }

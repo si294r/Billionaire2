@@ -138,11 +138,14 @@
 
                             $('[name="_id"]').val(data._id);
                             $('[name="event_name"]').val(data.event_name);
+                            $('[name="server_time"]').val(data.server_time);
                             $('[name="start_date"]').val(data.start_date);
                             $('[name="end_date"]').val(data.end_date);
                             $('[name="device"]').val(data.device);
                             $('[name="version"]').val(data.version);
                             $('[name="status"]').val(data.status);
+                            $('[name="server_time"]').val(data.server_time);
+                            $('[name="update_time"]').val(data.update_time);
 
                             $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
                             $('.modal-title').text('Edit Event'); // Set title to Bootstrap modal title
@@ -268,6 +271,18 @@
                                             <option value="Active">Active</option>
                                             <option value="Inactive">Inactive</option>
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" <?php if($this->event->is_development() != 'Event_dev') echo "style=\"display:none\"" ?>>
+                                    <label class="control-label col-md-3">Server Time</label>
+                                    <div class="col-md-9">
+                                        <input name="server_time" placeholder="<?php echo gmdate('Y-m-d h:i:s') ?>" class="form-control" type="datetime">
+                                    </div>
+                                </div>
+                                <div class="form-group" <?php if($this->event->is_development() != 'Event_dev') echo "style=\"display:none\"" ?>>
+                                    <label class="control-label col-md-3">Update Time</label>
+                                    <div class="col-md-9">
+                                        <input name="update_time" disabled="true" placeholder="" class="form-control" type="datetime">
                                     </div>
                                 </div>
                             </div>

@@ -8,6 +8,7 @@ class Event_model extends CI_Model {
     var $table = 'event';
     var $column = array('event_name', 'start_date', 'end_date', 'device', 'version', 'status');
     var $order = array('event_name' => 'desc');
+    private $is_development = false;
 
     public function __construct() {
         parent::__construct();
@@ -17,6 +18,7 @@ class Event_model extends CI_Model {
     {
         $this->load->helper('mongodb');
         $this->db = get_mongodb($is_development);    
+        $this->is_development = $is_development;
     }
 
     private function _get_filter() {
@@ -84,4 +86,7 @@ class Event_model extends CI_Model {
         $this->db->event->deleteOne(['_id' => bson_oid($id)]);
     }
 
+    public function is_development() {
+        return $this->is_development;
+    }
 }
