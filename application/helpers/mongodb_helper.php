@@ -4,22 +4,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 require '/var/www/vendor/autoload.php';
 
+
 // get mongodb object database
 function get_mongodb($is_development = false) {
-    $ci = & get_instance();
-    $ci->config->load('mongodb', true);
-    
-    $database = $is_development == true 
-            ? $ci->config->item('database_dev', 'mongodb')
-            : $ci->config->item('database', 'mongodb');
-    
+
+/* Example file content '/var/www/mongodb.php'
+ 
+    $config['username'] = '***********';
+    $config['password'] = '***********';
+    $config['hostname'] = 'api.alegrium.com';
+    $config['database'] = 'billionaire_prod';
+    $config['database_dev'] = 'billionaire_dev';
+    $config['options'] = array('ssl' => true);
+ 
+ */
+    include '/var/www/mongodb.php';
+
+    $database = $is_development == true ? $config['database_dev'] : $config['database'];
+
     $connection_string = "mongodb://"
-            . $ci->config->item('username', 'mongodb') . ":"
-            . $ci->config->item('password', 'mongodb') . "@"
-            . $ci->config->item('hostname', 'mongodb') . "/"
+            . $config['username'] . ":"
+            . $config['password'] . "@"
+            . $config['hostname'] . "/"
             . $database;
 
-    $client = new MongoDB\Client($connection_string); // create object client 
+    $client = new MongoDB\Client($connection_string, $config['options']); // create object client 
+
     return $client->$database; // select database
 }
 
